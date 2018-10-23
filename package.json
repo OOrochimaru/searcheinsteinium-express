@@ -13,6 +13,7 @@
     "fs": "0.0.1-security",
     "http-errors": "~1.6.2",
     "jade": "~1.11.0",
+    "mongoose": "^5.3.5",
     "morgan": "~1.9.0",
     "node-cron": "^2.0.3",
     "request": "^2.88.0",
