@@ -53,83 +53,83 @@ app.use(function(req, res, next) {
 
 
 
-var startURL = "http://www.arstechnica.com";
-var search_word = 'google';
-var max_page_to_visit = 10;
+// var startURL = "http://www.arstechnica.com";
+// var search_word = 'google';
+// var max_page_to_visit = 10;
 
-var page_visited= {};
-var no_of_page_visited = 0;
-var page_to_visit = [];
-var url = new URL(startURL);
-var baseUrl = url.protocol + '//' + url.hostname;
-page_to_visit.push(startURL);
-crawl();
+// var page_visited= {};
+// var no_of_page_visited = 0;
+// var page_to_visit = [];
+// var url = new URL(startURL);
+// var baseUrl = url.protocol + '//' + url.hostname;
+// page_to_visit.push(startURL);
+// crawl();
 
-function crawl(){
-  if (no_of_page_visited >= max_page_to_visit) {
-    console.log("Maximum Pages Reached");
-    return;
-  }
-  var nextPage = page_to_visit.pop();
+// function crawl(){
+//   if (no_of_page_visited >= max_page_to_visit) {
+//     console.log("Maximum Pages Reached");
+//     return;
+//   }
+//   var nextPage = page_to_visit.pop();
 
-  if (nextPage in page_visited) {
-    crawl();
-  }else{
-    //new page we haven't visited
-    visitPage(nextPage, crawl);
-  }
-}
-function visitPage(nextPage, callback){
-      //add page to our set
-      page_visited[url] = true;
-      no_of_page_visited++;
+//   if (nextPage in page_visited) {
+//     crawl();
+//   }else{
+//     //new page we haven't visited
+//     visitPage(nextPage, crawl);
+//   }
+// }
+// function visitPage(nextPage, callback){
+//       //add page to our set
+//       page_visited[url] = true;
+//       no_of_page_visited++;
 
-      //make the request 
-      console.log("Visiting page " + url);
-      request(nextPage, function(err, response, body){
-        if (response.statusCode !== 200) {
-          callback();
-          return;  
-        }
-        //parse the document
-        var  $ = cheerio.load(body);
-        var isWordFound = searchForWords($, search_word);
-        if (isWordFound) {
-          console.log('Word ' + search_word + ' found at page ' + url);
-          // callback();
-        }else{
-          collectInternalLinks($);
-          callback();
-        }
+//       //make the request 
+//       console.log("Visiting page " + url);
+//       request(nextPage, function(err, response, body){
+//         if (response.statusCode !== 200) {
+//           callback();
+//           return;  
+//         }
+//         //parse the document
+//         var  $ = cheerio.load(body);
+//         var isWordFound = searchForWords($, search_word);
+//         if (isWordFound) {
+//           console.log('Word ' + search_word + ' found at page ' + url);
+//           // callback();
+//         }else{
+//           collectInternalLinks($);
+//           callback();
+//         }
         
-      });
-}
+//       });
+// }
 
-// request(pageToVisit, function(err, response, body){
-//   if (err) {
-//     console.log(err);
+// // request(pageToVisit, function(err, response, body){
+// //   if (err) {
+// //     console.log(err);
+// //   }
+// //   if (response.statusCode === 200) {
+// //     var $ = cheerio.load(body);
+// //     console.log("Page Title", $('title').text());
+// //   }
+// // });
+
+// function searchForWords($, word){
+//   var bodyText = $('html > body').text().toLowerCase();
+//   if (bodyText.indexOf(word.toLowerCase()) !== -1) {
+//     return true;
 //   }
-//   if (response.statusCode === 200) {
-//     var $ = cheerio.load(body);
-//     console.log("Page Title", $('title').text());
-//   }
-// });
+//   return false;
+// }
 
-function searchForWords($, word){
-  var bodyText = $('html > body').text().toLowerCase();
-  if (bodyText.indexOf(word.toLowerCase()) !== -1) {
-    return true;
-  }
-  return false;
-}
-
-function collectInternalLinks($){
-  var relativeLinks = $("a[href^='/']");
-  console.log("Found " + relativeLinks.length + " relative links on page");
-  relativeLinks.each(function(){
-    page_to_visit.push(baseUrl + $(this).attr('href'));
-  });
-}
+// function collectInternalLinks($){
+//   var relativeLinks = $("a[href^='/']");
+//   console.log("Found " + relativeLinks.length + " relative links on page");
+//   relativeLinks.each(function(){
+//     page_to_visit.push(baseUrl + $(this).attr('href'));
+//   });
+// }
 
 
 
