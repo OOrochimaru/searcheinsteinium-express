@@ -38,6 +38,32 @@ scrapeInitializeSeason = function(url){
     return;
   }
 }
+scrapeSeason = function(url){
+  request(url, function(err, response, body){
+    if (err) {
+      console.log(err);
+    }
+    var $ = cheerio.load(body);
+    $('pre > a').each(function(){
+      var data = $(this);
+      var newUrlLink = data.attr('href');
+      var downloadableLink = newUrlLink;
+      var full_url = url + downloadableLink;
+      var last_key = newUrlLink.charAt(newUrlLink.length - 1)
+      var fileName = newUrlLink.replace(/.mkv|.mp4|.jpg/g,'').split('.').join(' ');
+      if (acceptedExt.indexOf(path.extname(newUrlLink)) != -1) {
+        saveSeasonsInDataBase(fileName, full_url);
+        console.log(fileName+"88888888888888888888888888888888888888");
+        // console.log(newUrlLink.replace('.mkv', ''));
+      }else if (last_key == '/' && newUrlLink != '../'){
+        var newUrl = url + newUrlLink;
+        site_to_visit.push(newUrl);
+        scrapeInitializeSeason(newUrl);
+      }
+    });
+  });
+}
+
 router.get('/movie', function(res, res, next){
   // url = 'http://dl2.upload08.com/files/Film/';
  
@@ -79,31 +105,7 @@ scrapeMovie = function(url){
     });
   });
 }
-scrapeSeason = function(url){
-  request(url, function(err, response, body){
-    if (err) {
-      console.log(err);
-    }
-    var $ = cheerio.load(body);
-    $('pre > a').each(function(){
-      var data = $(this);
-      var newUrlLink = data.attr('href');
-      var downloadableLink = newUrlLink;
-      var full_url = url + downloadableLink;
-      var last_key = newUrlLink.charAt(newUrlLink.length - 1)
-      var fileName = newUrlLink.replace(/.mkv|.mp4|.jpg/g,'').split('.').join(' ');
-      if (acceptedExt.indexOf(path.extname(newUrlLink)) != -1) {
-        saveSeasonsInDataBase(fileName, full_url);
-        console.log(fileName+"88888888888888888888888888888888888888");
-        // console.log(newUrlLink.replace('.mkv', ''));
-      }else if (last_key == '/' && newUrlLink != '../'){
-        var newUrl = url + newUrlLink;
-        site_to_visit.push(newUrl);
-        scrapeInitializeSeason(newUrl);
-      }
-    });
-  });
-}
+
 
 saveMoviesInDataBase = function(fileName, downloadableLink){
   var movie = new Movie({
@@ -111,7 +113,17 @@ saveMoviesInDataBase = function(fileName, downloadableLink){
     download_link : downloadableLink
   });
   movie.save().then(function(err){
-    console.log("saved");
+    if (err) {
+      if (err.name === 'MongoError' && err.code === 11000) {
+        // Duplicate username
+         console.log("already the in database ++++++++++++++++++++++++")
+        }else{
+          console.log("already else the in database ++++++++++++++++++++++++")
+
+      }
+    }else{
+      console.log("Movie saved");
+    }
   });
 }
 saveSeasonsInDataBase = function(fileName, downloadableLink){
@@ -119,8 +131,18 @@ saveSeasonsInDataBase = function(fileName, downloadableLink){
     title : fileName,
     download_link : downloadableLink
   });
-  movie.save().then(function(){
-    console.log("saved");
+  movie.save().then(function(err){
+    if (err) {
+      if (err.name === 'MongoError' && err.code === 11000) {
+        // Duplicate username
+         console.log("already the in database ++++++++++++++++++++++++")
+        }else{
+          console.log("already else the in database ++++++++++++++++++++++++")
+
+      }
+    }else{
+      console.log("Season saved");
+    }
   });
 }
 
