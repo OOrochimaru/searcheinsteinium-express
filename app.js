@@ -44,14 +44,14 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
-cron.schedule("46 * * * *", function(){
+cron.schedule("47 * * * *", function(){
   console.log("cron intitialize");
   index.crawlSeasons(SEASON_URI);
   index.crawlMovies(MOVIE_URI);
 },{
   schedule: true,
   timeZone: 'asia/mumbai'
-}).start();
+});
 
 
 // var startURL = "http://www.arstechnica.com";
