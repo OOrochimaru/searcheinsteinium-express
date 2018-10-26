@@ -42,7 +42,7 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
-cron.schedule("07 * * * *", function(){
+cron.schedule("09 * * * *", function(){
   index.crawlSeasons(SEASON_URI);
   index.crawlMovies(MOVIE_URI);
 },{
