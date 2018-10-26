@@ -42,10 +42,9 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
-cron.schedule("24 * * * *", function(){
-  console.log('Runs every 23 hours');
-  index.SEASON_URI(SEASON_URI);
-  index.MOVIE_URI(MOVIE_URI);
+cron.schedule("45 * * * *", function(){
+  index.crawlSeasons(SEASON_URI);
+  index.crawlMovies(MOVIE_URI);
 })
 
 
