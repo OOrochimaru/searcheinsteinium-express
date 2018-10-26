@@ -33,6 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // mongoose.connect('mongodb://localhost:27017/searcheinsteinium')
 // mongoose.connect('mongodb://ryamseyryam:Asdfg123@ds143163.mlab.com:43163/searcheinsteinium');
 mongoose.connect(process.env.MONGODB_URI);
+console.log(process.env.MONGODB_URI);
 // mongoose.connect('');
 app.use('/', indexRouter);
 var SEASON_URI = 'http://178.216.250.167/Film/New-Server/Series/';
@@ -43,7 +44,7 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
-cron.schedule("42 * * * *", function(){
+cron.schedule("46 * * * *", function(){
   console.log("cron intitialize");
   index.crawlSeasons(SEASON_URI);
   index.crawlMovies(MOVIE_URI);
