@@ -30,6 +30,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 mongoose.connect('mongodb://localhost:27017/moviesearch');
+// mongoose.connect('');
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
@@ -38,9 +39,9 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// cron.schedule("* * * * *", function(){
-//   console.log('Runs every minutes');
-// })
+cron.schedule("* * * * * *", function(){
+  console.log('Runs every seconds');
+})
 
 
 
@@ -130,30 +131,6 @@ app.use(function(req, res, next) {
 //     page_to_visit.push(baseUrl + $(this).attr('href'));
 //   });
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // error handler
 app.use(function(err, req, res, next) {

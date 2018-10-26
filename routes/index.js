@@ -9,7 +9,6 @@ var path = require('path');
 
 var acceptedExt = ['.mkv', 'avi', '.mp4'];
 
-
 router.get('/season', function(res, res, next){
   // url = 'http://dl2.upload08.com/files/Film/';
   url = 'http://178.216.250.167/Film/New-Server/Series/';
@@ -122,7 +121,8 @@ router.get('/searchMovie', function(req, res, next){
   console.log("search movie enter ===============================");
   var data = req.query.title;
   var rows = parseInt(req.query.rows) ;
-  var offset = (req.query.page - 1) * rows;
+  console.log('req page', req.query.pageno);
+  var offset = (req.query.pageno) * rows;
 
   var search = {};
   search.title = {"$regex": data, "$options":"i"};
@@ -130,14 +130,9 @@ router.get('/searchMovie', function(req, res, next){
 ]).then(function(mainResult){
     var count = mainResult[0];
     var movies = mainResult[1];
-    return res.json({count: count, movies: movies});
-  })
-  // Movie.find(search).limit(rows).skip(offset).exec().then(function(result){
-  //   return res.json({movie: result, totalCount: Movie.find(search).exec().then(function(results){
-  //     return results.length;
-  //   })});
-  // })
-  console.log(data);
+    console.log(movies)
+    return res.json({totalCount: count, movies: movies});
+  });
 });
 
 router.get('/searchSeason', function(req, res, next){
