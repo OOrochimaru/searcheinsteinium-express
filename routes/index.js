@@ -109,7 +109,7 @@ saveMoviesInDataBase = function(fileName, downloadableLink){
     title : fileName,
     download_link : downloadableLink
   });
-  movie.save().then(function(){
+  movie.save().then(function(err){
     console.log("saved");
   });
 }
