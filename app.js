@@ -33,17 +33,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 mongoose.connect('mongodb://ryamseyryam:Asdfg123@ds143163.mlab.com:43163/searcheinsteinium');
 // mongoose.connect('');
 app.use('/', indexRouter);
-var url = 'http://178.216.250.167/Film/New-Server/Series/';
-
+var SEASON_URI = 'http://178.216.250.167/Film/New-Server/Series/';
+var MOVIE_URI = 'http://dl2.upload08.com/files/Film/250%20IMDB/';
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-cron.schedule("0 0-23/23 * * * *", function(){
+cron.schedule("5 * * * * *", function(){
   console.log('Runs every 23 hours');
-  index.check(url);
+  index.SEASON_URI(SEASON_URI);
+  index.MOVIE_URI(MOVIE_URI);
 })
 
 
