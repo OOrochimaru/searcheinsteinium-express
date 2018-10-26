@@ -11,10 +11,12 @@ var acceptedExt = ['.mkv', 'avi', '.mp4'];
 
 site_to_visit = [];
 module.exports.crawlSeasons = function(url){
+  console.log("season crawling")
   site_to_visit.push(url);
   scrapeInitializeSeason(url);
 }
 module.exports.crawlMovies = function(url){
+  console.log("movie crawling")
   site_to_visit.push(url);
   scrapeInitializeMovie(url);
 }
