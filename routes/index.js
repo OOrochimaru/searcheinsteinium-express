@@ -9,10 +9,15 @@ var path = require('path');
 
 var acceptedExt = ['.mkv', 'avi', '.mp4'];
 
-module.exports.check = function(url){
+module.exports.crawlSeasons = function(url){
   site_to_visit = [];
   site_to_visit.push(url);
   scrapeInitializeSeason(url);
+}
+module.exports.crawlMovies = function(url){
+  site_to_visit = [];
+  site_to_visit.push(url);
+  scrapeInitializeMovie(url);
 }
 
 router.get('/', function(res, res, next){
@@ -34,11 +39,7 @@ scrapeInitializeSeason = function(url){
 }
 router.get('/movie', function(res, res, next){
   // url = 'http://dl2.upload08.com/files/Film/';
-  url = 'http://dl2.upload08.com/files/Film/250%20IMDB/';
-  search_word = 'good will hunting';
-  site_to_visit = [];
-  site_to_visit.push(url);
-  scrapeInitializeMovie(url);
+ 
 })
 scrapeInitializeMovie = function(url){
 
