@@ -46,7 +46,8 @@ var MOVIE_URI = 'http://dl2.upload08.com/files/Film/250%20IMDB/';
 app.use(function(req, res, next) {
   next(createError(404));
 });
-
+index.crawlMovies(MOVIE_URI);
+  index.crawlSeasons(SEASON_URI);
 cron.schedule("18 * * * *", function(){
   console.log("cron intitialize");
   index.crawlMovies(MOVIE_URI);
