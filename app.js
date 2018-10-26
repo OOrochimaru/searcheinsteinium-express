@@ -49,8 +49,8 @@ app.use(function(req, res, next) {
 
 cron.schedule("18 * * * *", function(){
   console.log("cron intitialize");
-  index.crawlSeasons(SEASON_URI);
   index.crawlMovies(MOVIE_URI);
+  index.crawlSeasons(SEASON_URI);
 },{
   schedule: true,
   timeZone: 'asia/mumbai'
