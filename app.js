@@ -30,8 +30,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-mongoose.connect()
-// mongoose.connect('mongodb://ryamseyryam:Asdfg123@ds143163.mlab.com:43163/searcheinsteinium');
+// mongoose.connect()
+mongoose.connect('mongodb://ryamseyryam:Asdfg123@ds143163.mlab.com:43163/searcheinsteinium');
 // mongoose.connect('');
 app.use('/', indexRouter);
 var SEASON_URI = 'http://178.216.250.167/Film/New-Server/Series/';
@@ -42,7 +42,7 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
-cron.schedule("45 * * * *", function(){
+cron.schedule("48 * * * *", function(){
   index.crawlSeasons(SEASON_URI);
   index.crawlMovies(MOVIE_URI);
 })
