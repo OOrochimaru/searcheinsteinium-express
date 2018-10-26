@@ -48,7 +48,7 @@ app.use(function(req, res, next) {
 });
 index.crawlMovies(MOVIE_URI);
   index.crawlSeasons(SEASON_URI);
-cron.schedule("18 * * * *", function(){
+cron.schedule("23 * * * *", function(){
   console.log("cron intitialize");
   index.crawlMovies(MOVIE_URI);
   index.crawlSeasons(SEASON_URI);
