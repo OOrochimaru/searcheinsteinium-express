@@ -9,12 +9,15 @@ var path = require('path');
 
 var acceptedExt = ['.mkv', 'avi', '.mp4'];
 
-router.get('/season', function(res, res, next){
-  // url = 'http://dl2.upload08.com/files/Film/';
-  url = 'http://178.216.250.167/Film/New-Server/Series/';
+module.exports.check = function(url){
   site_to_visit = [];
   site_to_visit.push(url);
   scrapeInitializeSeason(url);
+}
+
+router.get('/season', function(res, res, next){
+  // url = 'http://dl2.upload08.com/files/Film/';
+
 });
 scrapeInitializeSeason = function(url){
 
@@ -219,4 +222,4 @@ router.get('/searchSeason', function(req, res, next){
 // });
 
 
-module.exports = router;
+module.exports.router = router;

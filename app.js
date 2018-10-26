@@ -9,12 +9,12 @@ var cheerio =  require('cheerio');
 var URL = require('url-parse');
 var request = require('request');
 var mongoose = require('mongoose');
+var index = require('./routes/index');
 
 var isProduction = process.env.NODE_ENV === 'production';
 
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var indexRouter = require('./routes/index').router;
 
 var app = express();
 
@@ -29,29 +29,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-mongoose.connect('mongodb://localhost:27017/moviesearch');
+
+mongoose.connect('mongodb://ryamseyryam:Asdfg123@ds143163.mlab.com:43163/searcheinsteinium');
 // mongoose.connect('');
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+var url = 'http://178.216.250.167/Film/New-Server/Series/';
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-cron.schedule("* * * * * *", function(){
-  console.log('Runs every seconds');
+cron.schedule("0 0-23/23 * * * *", function(){
+  console.log('Runs every 23 hours');
+  index.check(url);
 })
-
-
-
-
-
-
-
-
-
-
 
 
 // var startURL = "http://www.arstechnica.com";
