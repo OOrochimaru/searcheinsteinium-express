@@ -30,7 +30,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// mongoose.connect()
+// mongoose.connect('mogodb://localhost:27017/searcheinsteinium')
 mongoose.connect('mongodb://ryamseyryam:Asdfg123@ds143163.mlab.com:43163/searcheinsteinium');
 // mongoose.connect('');
 app.use('/', indexRouter);
@@ -42,10 +42,13 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
-cron.schedule("48 * * * *", function(){
+cron.schedule("54 * * * *", function(){
   index.crawlSeasons(SEASON_URI);
   index.crawlMovies(MOVIE_URI);
-})
+},{
+  schedule: true,
+  timezone: 'asia/calcutta'
+}).start();
 
 
 // var startURL = "http://www.arstechnica.com";
