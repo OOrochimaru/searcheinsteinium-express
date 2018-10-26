@@ -17,6 +17,8 @@ module.exports.check = function(url){
 
 router.get('/season', function(res, res, next){
   // url = 'http://dl2.upload08.com/files/Film/';
+  return res.json("season Test", "Hello world");
+  console.log()
 
 });
 scrapeInitializeSeason = function(url){
