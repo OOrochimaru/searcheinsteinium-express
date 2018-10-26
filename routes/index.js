@@ -9,13 +9,12 @@ var path = require('path');
 
 var acceptedExt = ['.mkv', 'avi', '.mp4'];
 
+site_to_visit = [];
 module.exports.crawlSeasons = function(url){
-  site_to_visit = [];
   site_to_visit.push(url);
   scrapeInitializeSeason(url);
 }
 module.exports.crawlMovies = function(url){
-  site_to_visit = [];
   site_to_visit.push(url);
   scrapeInitializeMovie(url);
 }
