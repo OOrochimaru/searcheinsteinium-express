@@ -34,12 +34,16 @@ scrapeInitializeSeason = function(url){
     scrapeSeason(currentSite);
     console.log("visit", currentSite);
   }else{
-    console.log("100 data reached");
+    console.log("Season Crawling Finished");
     return;
   }
 }
 scrapeSeason = function(url){
-  request(url, function(err, response, body){
+  var options = {
+    url : url,
+    timeout: 5000
+  }
+  request(options, function(err, response, body){
     if (err) {
       console.log(err);
     }
@@ -76,13 +80,17 @@ scrapeInitializeMovie = function(url){
     scrapeMovie(currentSite);
     console.log("visit", currentSite);
   }else{
-    console.log("100 data reached");
+    console.log("Movie Crawling reached");
     return;
   }
 }
 
 scrapeMovie = function(url){
-  request(url, function(err, response, body){
+  var options = {
+    url : url,
+    timeout: 5000
+  }
+  request(options, function(err, response, body){
     if (err) {
       console.log(err);
     }
@@ -117,9 +125,9 @@ saveMoviesInDataBase = function(fileName, downloadableLink){
     if (err) {
       if (err.name === 'MongoError' && err.code === 11000) {
         // Duplicate username
-         console.log("already the in database ++++++++++++++++++++++++")
+         console.log(fileName +" is already the in database")
         }else{
-          console.log("already else the in database ++++++++++++++++++++++++")
+          console.log("Error in saveing "+ fileName)
 
       }
     }else{
@@ -136,9 +144,9 @@ saveSeasonsInDataBase = function(fileName, downloadableLink){
     if (err) {
       if (err.name === 'MongoError' && err.code === 11000) {
         // Duplicate username
-         console.log("already the in database ++++++++++++++++++++++++")
+         console.log(fileName +" is already the in database")
         }else{
-          console.log("already else the in database ++++++++++++++++++++++++")
+          console.log("Error in saveing "+ fileName)
 
       }
     }else{
