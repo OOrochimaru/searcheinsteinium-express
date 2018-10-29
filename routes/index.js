@@ -41,7 +41,7 @@ scrapeInitializeSeason = function(url){
 scrapeSeason = function(url){
   var options = {
     url : url,
-    timeout: 5000
+    // timeout: 5000
   }
   request(options, function(err, response, body){
     if (err) {
@@ -88,7 +88,7 @@ scrapeInitializeMovie = function(url){
 scrapeMovie = function(url){
   var options = {
     url : url,
-    timeout: 5000
+    // timeout: 5000
   }
   request(options, function(err, response, body){
     if (err) {
