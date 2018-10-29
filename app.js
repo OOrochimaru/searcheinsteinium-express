@@ -5,9 +5,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cron = require('cron').CronJob;
 var fs = require('fs');
-var cheerio =  require('cheerio');
+var cheerio = require('cheerio');
 var URL = require('url-parse');
 var request = require('request');
+const cors = require('cors');
 var mongoose = require('mongoose');
 var index = require('./routes/index');
 
@@ -19,6 +20,7 @@ var indexRouter = require('./routes/index').router;
 var app = express();
 
 // view engine setup
+// app.use(cors());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -30,20 +32,22 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+if (isProduction) {
+  mongoose.connect(process.env.MONGODB_URI).then(function () {
+    console.log("mongo connected success", process.env.MONGODB_URI);
+  })
+};
+
 // mongoose.connect('mongodb://localhost:27017/searcheinsteinium')
 // mongoose.connect('mongodb://ryamseyryam:Asdfg123@ds143163.mlab.com:43163/searcheinsteinium')
-mongoose.connect(process.env.MONGODB_URI).then(function(){
-  console.log("mongo connected success", process.env.MONGODB_URI);
-}).catch(function(e){
-  console.log("************************************", e);
-});
+
 // mongoose.connect('');
 app.use('/', indexRouter);
 var SEASON_URI = 'http://178.216.250.167/Film/New-Server/Series/';
 var MOVIE_URI = 'http://dl2.upload08.com/files/Film/250%20IMDB/';
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 // index.crawlMovies(MOVIE_URI);
@@ -57,15 +61,15 @@ app.use(function(req, res, next) {
 //   timeZone: 'asia/mumbai'
 // });
 if (isProduction) {
- crawlerCronJob().start();
+  crawlerCronJob().start();
 }
-module.exports.crawlerCronJob =  new CronJob({
-  cronTime:'0 50 * * * *',
-  onTick:function(){
+module.exports.crawlerCronJob = new CronJob({
+  cronTime: '0 56 * * * *',
+  onTick: function () {
     index.crawlMovies(MOVIE_URI);
     index.crawlSeasons(SEASON_URI);
   },
-  timeZone:'Asia/Kolkata',
+  timeZone: 'Asia/Kolkata',
 });
 
 
@@ -117,7 +121,7 @@ module.exports.crawlerCronJob =  new CronJob({
 //           collectInternalLinks($);
 //           callback();
 //         }
-        
+
 //       });
 // }
 
@@ -148,7 +152,7 @@ module.exports.crawlerCronJob =  new CronJob({
 // }
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
