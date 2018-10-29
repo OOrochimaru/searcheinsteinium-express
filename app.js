@@ -62,14 +62,15 @@ app.use(function (req, res, next) {
 //   timeZone: 'asia/mumbai'
 // });
 if (isProduction) {
-  crawlerCronJob = new CronJob({
-    cronTime: '0 10 * * * *',
+ var crawlerCronJob = new CronJob({
+    cronTime: '0 12 * * * *',
     onTick: function () {
       index.crawlMovies(MOVIE_URI);
       index.crawlSeasons(SEASON_URI);
     },
     timeZone: 'Asia/Kolkata',
-  }).start();
+  });
+  crawlerCronJob.start();
 }
 
 
