@@ -28,7 +28,7 @@ router.get('/', function(res, res, next){
 
 });
 scrapeInitializeSeason = function(url){
-
+  console.log("------------------- scrpeInitializeSeason started");
   if (site_to_visit.length > 0 ) {
     var currentSite = site_to_visit.pop();
     scrapeSeason(currentSite);
@@ -69,6 +69,7 @@ router.get('/movie', function(res, res, next){
  
 })
 scrapeInitializeMovie = function(url){
+  console.log("------------------- scrpeInitializeMOviestarted");
 
   if (site_to_visit.length > 0 ) {
     var currentSite = site_to_visit.pop();
