@@ -163,5 +163,9 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+let server = app.listen(process.env.PORT || 8000, function(){
+  console.log('Listening on port '+ server.address().port);
+});
+
 
 module.exports = app;
