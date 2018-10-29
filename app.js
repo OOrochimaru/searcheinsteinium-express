@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var cron = require('cron');
+var cron = require('cron').CronJob;
 var fs = require('fs');
 var cheerio =  require('cheerio');
 var URL = require('url-parse');
@@ -57,7 +57,7 @@ app.use(function(req, res, next) {
 //   timeZone: 'asia/mumbai'
 // });
 if (isProduction) {
- crawlerCronJob();
+ crawlerCronJob().start();
 }
 module.exports.crawlerCronJob =  new CronJob({
   cronTime:'0 50 * * * *',
