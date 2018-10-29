@@ -63,10 +63,10 @@ app.use(function (req, res, next) {
 // });
 if (isProduction) {
  var crawlerCronJob = new CronJob({
-    cronTime: '0 31 * * * *',
+    cronTime: '0 46 * * * *',
     onTick: function () {
       index.crawlMovies(MOVIE_URI);
-      index.crawlSeasons(SEASON_URI);
+      // index.crawlSeasons(SEASON_URI);
     },
     timeZone: 'Asia/Kolkata',
   });
