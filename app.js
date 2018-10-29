@@ -63,7 +63,7 @@ app.use(function (req, res, next) {
 // });
 if (isProduction) {
   crawlerCronJob = new CronJob({
-    cronTime: '0 8 * * * *',
+    cronTime: '0 10 * * * *',
     onTick: function () {
       index.crawlMovies(MOVIE_URI);
       index.crawlSeasons(SEASON_URI);
