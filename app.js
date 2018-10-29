@@ -62,16 +62,16 @@ app.use(function (req, res, next) {
 //   timeZone: 'asia/mumbai'
 // });
 if (isProduction) {
-  crawlerCronJob().start();
+  crawlerCronJob = new CronJob({
+    cronTime: '0 8 * * * *',
+    onTick: function () {
+      index.crawlMovies(MOVIE_URI);
+      index.crawlSeasons(SEASON_URI);
+    },
+    timeZone: 'Asia/Kolkata',
+  }).start();
 }
-module.exports.crawlerCronJob = new CronJob({
-  cronTime: '0 8 * * * *',
-  onTick: function () {
-    index.crawlMovies(MOVIE_URI);
-    index.crawlSeasons(SEASON_URI);
-  },
-  timeZone: 'Asia/Kolkata',
-});
+
 
 
 // var startURL = "http://www.arstechnica.com";
