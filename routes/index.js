@@ -183,7 +183,7 @@ router.get('/searchSeason', function(req, res, next){
   var season_number;
   var episode_number;
   var title;
-  season_number = parseInt(searchData.slice(seasonIndex+6));
+  season_number =  parseInt(searchData.slice(seasonIndex+6));
   episode_number = parseInt(searchData.slice(episodeIndex+7));
   if (seasonIndex != -1 && episodeIndex != -1) {
     title = searchData.slice(0, seasonIndex);
@@ -225,7 +225,6 @@ router.get('/searchSeason', function(req, res, next){
 
   console.log("Final Format "+finalFormat);
 
-  console.log(season_number == 1);
   console.log(searchData +"season"+ seasonIndex + "season" 
   + episodeIndex+ 'sesonnumber'+ season_number
   + "episode number "+ episode_number);
