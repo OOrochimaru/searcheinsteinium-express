@@ -64,7 +64,7 @@ if (isProduction) {
   crawlerCronJob().start();
 }
 module.exports.crawlerCronJob = new CronJob({
-  cronTime: '0 59 * * * *',
+  cronTime: '0 05 * * * *',
   onTick: function () {
     index.crawlMovies(MOVIE_URI);
     index.crawlSeasons(SEASON_URI);
