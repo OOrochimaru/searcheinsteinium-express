@@ -12,7 +12,7 @@ const cors = require('cors');
 var mongoose = require('mongoose');
 var index = require('./routes/index');
 
-var isProduction = process.env.NODE_ENV === 'production';
+var isProduction = process.env.NODE_ENV == 'production';
 
 
 var indexRouter = require('./routes/index').router;
@@ -31,6 +31,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+console.log(isProduction);
 
 if (isProduction) {
   mongoose.connect(process.env.MONGODB_URI).then(function () {
