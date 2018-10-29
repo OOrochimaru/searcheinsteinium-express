@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var cron = require('node-cron');
+var cron = require('cron');
 var fs = require('fs');
 var cheerio =  require('cheerio');
 var URL = require('url-parse');
@@ -48,13 +48,24 @@ app.use(function(req, res, next) {
 });
 // index.crawlMovies(MOVIE_URI);
 //   index.crawlSeasons(SEASON_URI);
-cron.schedule("12 * * * *", function(){
-  console.log("cron intitialize");
-  index.crawlMovies(MOVIE_URI);
-  index.crawlSeasons(SEASON_URI);
-},{
-  schedule: true,
-  timeZone: 'asia/mumbai'
+// cron.schedule("12 * * * *", function(){
+//   console.log("cron intitialize");
+//   index.crawlMovies(MOVIE_URI);
+//   index.crawlSeasons(SEASON_URI);
+// },{
+//   schedule: true,
+//   timeZone: 'asia/mumbai'
+// });
+if (isProduction) {
+ crawlerCronJob();
+}
+module.exports.crawlerCronJob =  new CronJob({
+  cronTime:'0 50 * * * *',
+  onTick:function(){
+    index.crawlMovies(MOVIE_URI);
+    index.crawlSeasons(SEASON_URI);
+  },
+  timeZone:'Asia/Kolkata',
 });
 
 
