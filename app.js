@@ -65,8 +65,8 @@ if (isProduction) {
  var crawlerCronJob = new CronJob({
     cronTime: '0 46 * * * *',
     onTick: function () {
+      index.crawlSeasons(SEASON_URI);
       index.crawlMovies(MOVIE_URI);
-      // index.crawlSeasons(SEASON_URI);
     },
     timeZone: 'Asia/Kolkata',
   });
